@@ -18,6 +18,8 @@
 		1B41D6AD16475D70006511FE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B41D6AC16475D70006511FE /* Default-568h@2x.png */; };
 		1B41D6B016475D70006511FE /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B41D6AE16475D70006511FE /* MainStoryboard.storyboard */; };
 		1B41D6B316475D70006511FE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B41D6B216475D70006511FE /* ViewController.m */; };
+		1B41D6BA16476034006511FE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B41D6B916476034006511FE /* CoreLocation.framework */; };
+		1B41D6BC16476047006511FE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B41D6BB16476047006511FE /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,8 @@
 		1B41D6AF16475D70006511FE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		1B41D6B116475D70006511FE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		1B41D6B216475D70006511FE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		1B41D6B916476034006511FE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		1B41D6BB16476047006511FE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +48,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B41D6BC16476047006511FE /* MapKit.framework in Frameworks */,
+				1B41D6BA16476034006511FE /* CoreLocation.framework in Frameworks */,
 				1B41D69716475D70006511FE /* UIKit.framework in Frameworks */,
 				1B41D69916475D70006511FE /* Foundation.framework in Frameworks */,
 				1B41D69B16475D70006511FE /* CoreGraphics.framework in Frameworks */,
@@ -73,6 +79,8 @@
 		1B41D69516475D70006511FE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1B41D6BB16476047006511FE /* MapKit.framework */,
+				1B41D6B916476034006511FE /* CoreLocation.framework */,
 				1B41D69616475D70006511FE /* UIKit.framework */,
 				1B41D69816475D70006511FE /* Foundation.framework */,
 				1B41D69A16475D70006511FE /* CoreGraphics.framework */,
