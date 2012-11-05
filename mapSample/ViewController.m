@@ -118,13 +118,13 @@
 - (void)stopLocationManager {
     _activeIndicator.hidden = YES;
     [_locationManager stopUpdatingLocation];
-    
+
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     CLLocation *location = [[CLLocation alloc] initWithLatitude:_location.coordinate.latitude longitude:_location.coordinate.longitude];
     
     [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
         NSString *address;
-        if (error){
+        if (error || !_location){
             NSLog(@"Geocode failed with error: %@", error);
             address = @"この場所はわかりません";
         } else {
