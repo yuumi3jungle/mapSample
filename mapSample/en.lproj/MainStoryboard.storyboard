@@ -25,22 +25,22 @@
                                 </items>
                             </toolbar>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2AC-f5-w0Z"/>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="AnO-e2-6pI"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="AnO-e2-6pI"/>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="AnO-e2-6pI" firstAttribute="centerX" secondItem="SKJ-mr-ef8" secondAttribute="centerX" type="default" id="3C2-GY-Wam"/>
                             <constraint firstItem="SKJ-mr-ef8" firstAttribute="bottom" secondItem="3" secondAttribute="bottom" type="default" id="4L6-uF-Z2Y"/>
                             <constraint firstItem="2AC-f5-w0Z" firstAttribute="bottom" secondItem="SKJ-mr-ef8" secondAttribute="top" type="default" id="9bk-5r-mwJ"/>
                             <constraint firstItem="ZGz-6s-apW" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="Fs7-VR-ich"/>
-                            <constraint firstItem="AnO-e2-6pI" firstAttribute="centerX" secondItem="ZGz-6s-apW" secondAttribute="centerX" type="default" id="GcC-Ve-ZeZ"/>
                             <constraint firstItem="2AC-f5-w0Z" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="Ggz-lR-HX1"/>
                             <constraint firstItem="ZGz-6s-apW" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="HQF-4d-m6j"/>
                             <constraint firstItem="2AC-f5-w0Z" firstAttribute="top" secondItem="ZGz-6s-apW" secondAttribute="bottom" type="default" id="MY2-fw-dzh"/>
                             <constraint firstItem="SKJ-mr-ef8" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="NPu-4s-fzc"/>
                             <constraint firstItem="ZGz-6s-apW" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="ZiX-K6-7cg"/>
-                            <constraint firstItem="AnO-e2-6pI" firstAttribute="top" secondItem="3" secondAttribute="top" constant="161" id="hEq-yq-oec"/>
                             <constraint firstItem="SKJ-mr-ef8" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="lGw-iE-1qo"/>
                             <constraint firstItem="2AC-f5-w0Z" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="rUX-vd-X56"/>
+                            <constraint firstItem="AnO-e2-6pI" firstAttribute="centerY" secondItem="SKJ-mr-ef8" secondAttribute="centerY" type="default" id="tB7-Wc-SPF"/>
                         </constraints>
                     </view>
                     <connections>

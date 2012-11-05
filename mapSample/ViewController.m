@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 
+#pragma mark Annotation Class
+
 @interface SimpleAnnotation : NSObject <MKAnnotation>
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 @property (nonatomic, readonly, copy) NSString *title;
@@ -25,7 +27,8 @@
 }
 @end
 
-
+#pragma mark -
+#pragma mark ViewController
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -40,6 +43,21 @@
 @end
 
 @implementation ViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    _mapView.delegate = self;
+    _searchBar.delegate = self;
+    _activeIndicator.hidden = YES;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+#pragma mark Map code
 
 - (void)setStartupRegion {
 	MKCoordinateRegion region;
@@ -73,19 +91,6 @@
     }];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    _mapView.delegate = self;
-    _searchBar.delegate = self;
-    _activeIndicator.hidden = YES;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [self setStartupRegion];
 }
@@ -95,16 +100,15 @@
     [self searchMapByAddress:searchBar.text];
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
+#pragma mark Location code
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    for (int i = 0; i < [locations count]; i++) {
-        CLLocation *s = locations[i];
-        NSLog(@"%d %f %f - %f", i, s.coordinate.latitude, s.coordinate.longitude, s.altitude);
+    if (locations.count > 0) {
+        CLLocation *p = locations[0];
+        if (!_location || p.altitude < _location.altitude) {
+            _location = p;
+        }
     }
-    _location = locations[0];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
@@ -135,6 +139,7 @@
 - (IBAction)locationButton:(id)sender {
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;
+    _location = nil;
     [_locationManager startUpdatingLocation];
 
     _activeIndicator.hidden = NO;
