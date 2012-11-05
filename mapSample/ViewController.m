@@ -32,6 +32,11 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 - (IBAction)locationButton:(id)sender;
 
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) CLLocation *location;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activeIndicator;
+@property (strong, nonatomic) UIAlertView *alertView;
+
 @end
 
 @implementation ViewController
@@ -73,6 +78,7 @@
     [super viewDidLoad];
     _mapView.delegate = self;
     _searchBar.delegate = self;
+    _activeIndicator.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -85,16 +91,54 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSLog(@"--searchBarShouldEndEditing");
     [searchBar resignFirstResponder];
-    [self performSelector:@selector(searchMapByAddress:) withObject:searchBar.text afterDelay:0.2];
+    [self searchMapByAddress:searchBar.text];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    for (int i = 0; i < [locations count]; i++) {
+        CLLocation *s = locations[i];
+        NSLog(@"%d %f %f - %f", i, s.coordinate.latitude, s.coordinate.longitude, s.altitude);
+    }
+    _location = locations[0];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    NSLog(@"Error: %@", error);
+}
+
+- (void)stopLocationManager {
+    _activeIndicator.hidden = YES;
+    [_locationManager stopUpdatingLocation];
+    
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:_location.coordinate.latitude longitude:_location.coordinate.longitude];
+    
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        NSString *address;
+        if (error){
+            NSLog(@"Geocode failed with error: %@", error);
+            address = @"この場所はわかりません";
+        } else {
+            CLPlacemark *p = placemarks[0];
+            address = [NSString stringWithFormat:@"%@ %@ %@%@", p.administrativeArea, p.locality, p.thoroughfare, p.subThoroughfare];
+        }
+        _alertView = [[UIAlertView alloc] initWithTitle:@"現在位置" message:address delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [_alertView show];
+    }];
+}
+
 - (IBAction)locationButton:(id)sender {
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
+    [_locationManager startUpdatingLocation];
+
+    _activeIndicator.hidden = NO;
+    [self performSelector:@selector(stopLocationManager) withObject:nil afterDelay:3.0];
 }
 
 @end
