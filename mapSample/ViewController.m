@@ -1,11 +1,3 @@
-//
-//  ViewController.m
-//  mapSample
-//
-//  Created by Yuumi Yoshida on 2012/11/05.
-//  Copyright (c) 2012年 Yuumi Yoshida. All rights reserved.
-//
-
 #import "ViewController.h"
 
 #pragma mark Annotation Class
@@ -33,12 +25,12 @@
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-- (IBAction)locationButton:(id)sender;
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *location;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activeIndicator;
 @property (strong, nonatomic) UIAlertView *alertView;
+- (IBAction)locationButton:(id)sender;
 
 @end
 
@@ -58,6 +50,15 @@
 }
 
 #pragma mark Map code
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self setStartupRegion];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+    [self searchMapByAddress:searchBar.text];
+}
 
 - (void)setStartupRegion {
 	MKCoordinateRegion region;
@@ -91,16 +92,17 @@
     }];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [self setStartupRegion];
-}
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [searchBar resignFirstResponder];
-    [self searchMapByAddress:searchBar.text];
-}
-
 #pragma mark Location code
+
+- (IBAction)locationButton:(id)sender {
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
+    _location = nil;
+    [_locationManager startUpdatingLocation];
+    
+    _activeIndicator.hidden = NO;
+    [self performSelector:@selector(stopLocationManager) withObject:nil afterDelay:3.0];
+}
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     if (locations.count > 0) {
@@ -120,9 +122,7 @@
     [_locationManager stopUpdatingLocation];
 
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    CLLocation *location = [[CLLocation alloc] initWithLatitude:_location.coordinate.latitude longitude:_location.coordinate.longitude];
-    
-    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+    [geocoder reverseGeocodeLocation:_location completionHandler:^(NSArray *placemarks, NSError *error) {
         NSString *address;
         if (error || !_location){
             NSLog(@"Geocode failed with error: %@", error);
@@ -134,16 +134,6 @@
         _alertView = [[UIAlertView alloc] initWithTitle:@"現在位置" message:address delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [_alertView show];
     }];
-}
-
-- (IBAction)locationButton:(id)sender {
-    _locationManager = [[CLLocationManager alloc] init];
-    _locationManager.delegate = self;
-    _location = nil;
-    [_locationManager startUpdatingLocation];
-
-    _activeIndicator.hidden = NO;
-    [self performSelector:@selector(stopLocationManager) withObject:nil afterDelay:3.0];
 }
 
 @end
