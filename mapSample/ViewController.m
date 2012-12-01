@@ -107,7 +107,7 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     if (locations.count > 0) {
         CLLocation *p = locations[0];
-        if (!_location || p.altitude < _location.altitude) {
+        if (!_location || p.horizontalAccuracy < _location.horizontalAccuracy) {
             _location = p;
         }
     }
